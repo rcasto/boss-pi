@@ -1,0 +1,14 @@
+{
+  "name": "boss-pi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Richie Casto",
+  "license": "ISC",
+  "dependencies": {
+    "messenger": "file:///C:\\Users\\Richie\\Desktop\\Projects\\Messager"
+  }
+}
