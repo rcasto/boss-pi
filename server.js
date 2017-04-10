@@ -2,11 +2,10 @@ var messengerServer = require('messenger').server;
 var config = require('./config.json');
 
 var activityMap = {};
-var activityState = config.initialState > 0 ? rpio.HIGH : rpio.LOW;
+var isActive = true;
 
 function messageHandler(message) {
-    console.log(`Message received from client: ${message}`);
-
+    console.log(`Message received from client: ${message}`, typeof message);
 }
 
 function activityMonitor(event) {
@@ -70,13 +69,6 @@ function clearActivityDebounce(type) {
     if (activityMap[type]) {
         clearTimeout(activityMap[type].activityDebounce);
         activityMap[type].activityDebounce = null;
-    }
-}
-
-function clearInactivityDebounce(type) {
-    if (activityMap[type]) {
-        clearTimeout(activityMap[type].inactivityDebounce);
-        activityMap[type].inactivityDebounce = null;
     }
 }
 
