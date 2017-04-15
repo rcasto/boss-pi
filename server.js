@@ -5,7 +5,7 @@ var activityMap = {};
 var isActive = true;
 
 function messageHandler(message) {
-    console.log(`Message received from client: ${message}`, typeof message);
+    console.log(`Message received from client: ${JSON.stringify(message)}`, typeof message);
 }
 
 function activityMonitor(event) {
