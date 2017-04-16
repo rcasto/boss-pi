@@ -82,5 +82,6 @@ function isAnyActivity() {
 var socketServer = messengerServer.create({
     messageHandler: messageHandler,
     port: config.port,
-    host: config.host
+    host: config.host,
+    keepAliveIntervalInMs: config.keepAliveIntervalInMs
 });
