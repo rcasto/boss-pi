@@ -40,7 +40,7 @@ class ActivityMonitor extends events.EventEmitter {
             // check if still active
             if (this.activityMap[activity.type].state > 0) {
                 this.activityMap[activity.type].inactivityTimeout = 
-                    setTimeout(_inactivityCheck, this.config.inactivityTimeoutInMs);
+                    setTimeout(_inactivityCheck.bind(this), this.config.inactivityTimeoutInMs);
             } else {
                 _clearActivity(this.activityMap[activity.type]);
                 // check if everything has now turned off
