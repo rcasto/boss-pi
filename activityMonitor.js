@@ -36,12 +36,18 @@ class ActivityMonitor extends events.EventEmitter {
         if (activity.state > 0) { // potential transfer to high
             _clearActivityTimeout(this.activityMap[activity.type]);
         }
-        this.activityMap[activity.type].inactivityTimeout = setTimeout(() => {
-            _clearActivity(this.activityMap[activity.type]);
-            // check if everything has now turned off
-            if (!this.isAnyActivity()) {
-                this.isActive = false;
-                this.emit(this.activityStatusEvent, 0);
+        this.activityMap[activity.type].inactivityTimeout = setTimeout(function _inactivityCheck() {
+            // check if still active
+            if (this.activityMap[activity.type].state > 0) {
+                this.activityMap[activity.type].inactivityTimeout = 
+                    setTimeout(_inactivityCheck, this.config.inactivityTimeoutInMs);
+            } else {
+                _clearActivity(this.activityMap[activity.type]);
+                // check if everything has now turned off
+                if (!this.isAnyActivity()) {
+                    this.isActive = false;
+                    this.emit(this.activityStatusEvent, 0);
+                }
             }
         }, this.config.inactivityTimeoutInMs);
     }
