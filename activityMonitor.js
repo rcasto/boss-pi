@@ -3,7 +3,7 @@ var events = require('events');
 class ActivityMonitor extends events.EventEmitter {
     constructor(config) {
         super();
-        
+
         this.activityMap = {};
         this.isActive = false;
         this.config = config;
@@ -18,7 +18,7 @@ class ActivityMonitor extends events.EventEmitter {
         }
     */
     report(activity) {
-        if (!isValidActivity(activity)) {
+        if (!this.isValidActivity(activity)) {
             return console.error(`Invalid activity reported: ${JSON.stringify(activity)}`);
         }
         if (!this.activityMap[activity.type]) {
