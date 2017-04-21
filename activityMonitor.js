@@ -1,9 +1,9 @@
 var events = require('events');
 
 class ActivityMonitor extends events.EventEmitter {
-    activityMap;
-    config;
     constructor(config) {
+        super();
+        
         this.activityMap = {};
         this.isActive = false;
         this.config = config;
