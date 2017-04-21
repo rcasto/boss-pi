@@ -23,10 +23,11 @@ class ActivityMonitor extends events.EventEmitter {
         }
         if (!this.activityMap[activity.type]) {
             this.activityMap[activity.type] = {
-                state: activity.state,
+                state: 0,
                 inactivityTimeout: null
             };
         }
+        this.activityMap[activity.type].state = activity.state;
         // check if this report made it active
         if (!this.isActive && this.isAnyActivity()) {
             this.isActive = true;
@@ -49,7 +50,6 @@ class ActivityMonitor extends events.EventEmitter {
             activity &&
             activity.type &&
             typeof activity.type === 'string' &&
-            activity.state &&
             typeof activity.state === 'number'
         );
     }
