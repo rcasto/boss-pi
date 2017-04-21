@@ -49,7 +49,7 @@ class ActivityMonitor extends events.EventEmitter {
                     this.emit(this.activityStatusEvent, 0);
                 }
             }
-        }, this.config.inactivityTimeoutInMs);
+        }.bind(this), this.config.inactivityTimeoutInMs);
     }
     isValidActivity(activity) {
         return !!(
