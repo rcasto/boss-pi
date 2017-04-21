@@ -1,5 +1,8 @@
 {
     "host": "localhost",
     "port": 3000,
-    "keepAliveIntervalInMs": 20000
+    "keepAliveIntervalInMs": 20000,
+    "activityConfig": {
+        "inactivityTimeoutInMs": 1800000
+    }
 }

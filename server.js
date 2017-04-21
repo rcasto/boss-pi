@@ -1,20 +1,42 @@
 var messengerServer = require('messenger').server;
-var activityMonitor = require('./activityMonitor');
 var config = require('./config.json');
+var activityMonitor = require('./activityMonitor')(config.activityConfig);
+
+function messageHandler(message) {
+    if (!isValidMessage(message)) {
+        return console.error(`Invalid message received from client: ${JSON.stringify(message)}`);
+    }
+    console.log(`Message received from client: ${JSON.stringify(message)}`);
+    switch (message.type) {
+        case 'activity':
+            activityMonitor.report(message.data);
+            break;
+        default:
+            console.error(`Unknown message received from client: ${JSON.stringify(message)}`);
+            break;
+    }
+}
+
+activityMonitor.on(activityMonitor.activityStatusEvent, (state) => {
+    console.log(`Activity monitor report: ${ state > 0 ? 'on' : 'off' }`);
+    if (state > 0) {
+
+    } else {
+
+    }
+});
 
 /*
     Messages from clients are of the following form:
     {
         type: string, - The type of the message ex) 'activity'
-        data: object    - Custom data object
+        data: any     - Custom data object/string/whatever
     }
 */
-function messageHandler(message) {
-    console.log(`Message received from client: ${JSON.stringify(message)}`, typeof message);
-
-    if (message.type === 'activity' && typeof message.data === 'object') {
-        activityMonitor.report(message.data);
-    }
+function isValidMessage(message) {
+    return message &&
+           message.type &&
+           typeof message.type === 'string';
 }
 
 var socketServer = messengerServer.create({
