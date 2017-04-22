@@ -19,11 +19,12 @@ function messageHandler(message) {
 
 activityMonitor.on(activityMonitor.activityStatusEvent, (state) => {
     console.log(`Activity monitor report: ${ state > 0 ? 'on' : 'off' }`);
-    if (state > 0) {
-
-    } else {
-
-    }
+    socketServer.clients && socketServer.clients.forEach((client) => {
+        client.send(JSON.stringify({
+            type: 'activity',
+            data: state
+        }));
+    });
 });
 
 /*
