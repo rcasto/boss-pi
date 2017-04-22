@@ -2,6 +2,8 @@ var messengerServer = require('messenger').server;
 var config = require('./config.json');
 var activityMonitor = require('./activityMonitor')(config.activityConfig);
 
+var socketServer = null;
+
 function messageHandler(message) {
     if (!isValidMessage(message)) {
         return console.error(`Invalid message received from client: ${JSON.stringify(message)}`);
@@ -19,7 +21,7 @@ function messageHandler(message) {
 
 activityMonitor.on(activityMonitor.activityStatusEvent, (state) => {
     console.log(`Activity monitor report: ${ state > 0 ? 'on' : 'off' }`);
-    socketServer.clients && socketServer.clients.forEach((client) => {
+    socketServer && socketServer.clients && socketServer.clients.forEach((client) => {
         client.send(JSON.stringify({
             type: 'activity',
             data: state
@@ -40,7 +42,7 @@ function isValidMessage(message) {
            typeof message.type === 'string';
 }
 
-var socketServer = messengerServer.create({
+socketServer = messengerServer.create({
     messageHandler: messageHandler,
     port: config.port,
     host: config.host,
