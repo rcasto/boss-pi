@@ -22,10 +22,10 @@ function messageHandler(message) {
 activityMonitor.on(activityMonitor.activityStatusEvent, (state) => {
     console.log(`Activity monitor report: ${ state > 0 ? 'on' : 'off' }`);
     socketServer && socketServer.clients && socketServer.clients.forEach((client) => {
-        client.send(JSON.stringify({
+        client.send({
             type: 'activity',
             data: state
-        }));
+        });
     });
 });
 
