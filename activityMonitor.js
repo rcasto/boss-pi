@@ -71,8 +71,8 @@ class ActivityMonitor extends events.EventEmitter {
 ActivityMonitor.prototype.activityStatusEvent = 'ActivityStatus';
 
 function _clearActivityTimeout(activity) {
-    clearTimeout(activity.inactivityTimeoutInMs);
-    activity.inactivityTimeoutInMs = null;
+    clearTimeout(activity.inactivityTimeout);
+    activity.inactivityTimeout = null;
 }
 
 function _clearActivity(activity) {
