@@ -33,11 +33,8 @@ class ActivityMonitor extends events.EventEmitter {
             this.isActive = true;
             this.emit(this.activityStatusEvent, 1);
         }
-        if (activity.state > 0) { // potential transfer to high
-            _clearActivityTimeout(this.activityMap[activity.type]);
-        }
+        _clearActivityTimeout(this.activityMap[activity.type]);
         this.activityMap[activity.type].inactivityTimeout = setTimeout(function _inactivityCheck() {
-            // check if still active
             if (this.activityMap[activity.type].state > 0) {
                 this.activityMap[activity.type].inactivityTimeout = 
                     setTimeout(_inactivityCheck.bind(this), this.config.inactivityTimeoutInMs);
