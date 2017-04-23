@@ -61,7 +61,7 @@ class ActivityMonitor extends events.EventEmitter {
     }
     isAnyActivity() {
         return Object.values(this.activityMap)
-            .some((activity) => activity.state > 0 && activity.inactivityTimeout);
+            .some((activity) => activity.state > 0 || activity.inactivityTimeout);
     }
     clearActivity(type) {
         if (type) {
