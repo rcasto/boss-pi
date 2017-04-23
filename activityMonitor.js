@@ -9,6 +9,9 @@ class ActivityMonitor extends events.EventEmitter {
         this.config = config;
         this.config.inactivityTimeoutInMs = 
             this.config.inactivityTimeoutInMs || 1800000; // defaults to 30 minutes
+
+        process.on('exit', this.clearActivity);
+        process.on('SIGINT', this.clearActivity);
     }
     /*
         activity is of the following form:
